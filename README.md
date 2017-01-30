@@ -1,3 +1,4 @@
 # qover_test
 Running test
-[[Exercise]]
+
+Check instructiction in the wiki page
