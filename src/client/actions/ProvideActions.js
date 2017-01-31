@@ -1,6 +1,5 @@
 import { dispatch, dispatchAsync } from '../dispatcher/AppDispatcher';
 import ProvideConstants from '../constants/ProvideConstants';
-import ActionTypes from '../constants/ActionTypes';
 import ProvideService from '../services/ProvideService';
 
 
@@ -11,7 +10,17 @@ export default {
         dispatchAsync(promise, {
           request: ProvideConstants.CALCULATE,
           success: ProvideConstants.CALCULATE_SUCCESS,
-          failure: ActionTypes.DATA_ERROR
+          failure: ProvideConstants.DATA_ERROR
+        }, { });
+
+    },
+    getCarList: () => {
+        let promise = ProvideService.getCarList();
+
+        dispatchAsync(promise, {
+          request: ProvideConstants.GET_CAR_LIST,
+          success: ProvideConstants.GET_CAR_LIST_SUCCESS,
+          failure: ProvideConstants.DATA_ERROR
         }, { });
 
     }

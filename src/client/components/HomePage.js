@@ -1,39 +1,37 @@
 import React, { Component } from 'react';
-import { Grid, Row, Col , ButtonToolbar, Button, Carousel, Media} from 'react-bootstrap';
-import { Link } from 'react-router';
-import Scrollchor from 'react-scrollchor';
-import _ from 'lodash';
-import Slider from './Slider';
-import AboutUs from './AboutUs';
-import AboutEmprunteur from './AboutEmprunteur';
-import AboutPreteur from './AboutPreteur';
-import OurService from './OurService';
-import Newsletter from './Newsletter';
-import Contact from './Contact';
+import Calculator from './Calculator';
+import ProvideStore from '../stores/ProvideStore';
+import ProvideActions from '../actions/ProvideActions';
 
 export default class HomePage extends Component {
-  constructor (){
-    super();
-    this.state = {index: 0, direction: null};
-  }
+    constructor (props){
+        super(props);
+        ProvideActions.getCarList();
 
-  render () {
-    return (
-      <div>
-        {/* Carousel  */}
-        <Slider/>
-          {/* about us section */}
-          <AboutUs/>
-          {/* about preteur section */}
-          <AboutPreteur/>
-          {/* about emprunteur section */}
-          <AboutEmprunteur/>
-          {/* our service section */}
-          <OurService />
-          {/* Newsletter ection */}
-          <Newsletter />
+        this._onChange = this._onChange.bind(this);
 
-      </div>
-    );
-  }
+        this.state = ProvideStore.stateSimulator;
+
+    }
+
+    _onChange() {
+        this.setState(ProvideStore.stateSimulator);
+    }
+
+    componentDidMount() {
+        ProvideStore.addChangeListener(this._onChange);
+    }
+
+    componentWillUnmount() {
+        ProvideStore.removeChangeListener(this._onChange);
+    }
+
+    render () {
+        return (
+            <div>
+              {/* Calculator */}
+              <Calculator {...this.state}/>
+            </div>
+        );
+    }
 }

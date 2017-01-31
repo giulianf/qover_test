@@ -1,18 +1,41 @@
 import _ from 'lodash';
 
 export default {
-  validateProfileTabBasic(basicInfo) {
-      if (_.isNil(basicInfo)) {
-          throw new Error("Impossible de valider le profil utilisateur.");
+    CAR_MINIMUM : 5000,
+    CAR_MAXIMUM : 75000,
+  validateSimulator(simulatorInfo) {
+      if (_.isNil(simulatorInfo)) {
+          throw new Error("Impossible to validate the calculator.");
       }
-      
-      if (!this.validateNom(basicInfo.nom)) {
-          throw new Error("Le prénom n'est pas valid.");
+
+      if (!this.validateNom(simulatorInfo.name)) {
+          throw new Error("The family name is not valid");
       }
-      
+
+      if (!this.validateCarValue(simulatorInfo.carValue)) {
+          throw new Error("The car value is not valid.");
+      }
+
   },
 
   validateNom(nom) {
       return !_.isNil(nom) && !_.isEmpty(nom) ? true : false;
+  },
+
+  validateCarName(carList, carNameSelected) {
+      if (!_.isNil(carList) && !_.isNil(carNameSelected) ) {
+         return _.find(carList, {value: carNameSelected});
+      }
+      return false;
+  },
+
+  validateCarValue(carValue) {
+      if (!_.isNil(carValue)) {
+          if ( carValue > this.CAR_MINIMUM && carValue < this.CAR_MAXIMUM) {
+              return true;
+          }
+      }
+
+      return false;
   }
 };

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router';
 
 import {Grid,  Row, Col, Navbar, Nav,NavDropdown, NavItem,MenuItem, Button, Glyphicon } from 'react-bootstrap';
-import Footer from './Footer';
 import Login from './Login';
 import LayoutStore from '../stores/LayoutStore';
 import LayoutActions from '../actions/LayoutActions';
@@ -45,47 +44,23 @@ class Layout extends Component {
     render() {
       let connexion;
 
-      if ( !this.state.loggedIn ) {
-        connexion =  (
-            <Link className="btn btn-flat btn-home-bg" to="/login">Connexion</Link>
-        ) ;
-    } else {
-        connexion =  (
-            <NavDropdown eventKey={3} title={<Glyphicon glyph="user" ></Glyphicon>} id="basic-nav-dropdown">
-                <Navbar.Text>
-                   {this.state.profile ? this.state.profile.name : null}
-                 </Navbar.Text>
-                <MenuItem divider />
-                <li>
-                   <Link to="/profile" >Profile</Link>
-                </li>
-                  <MenuItem divider />
-                  <MenuItem eventKey={3.3} onClick={this.logout} >Log Out <Glyphicon glyph="log-out" className="pull-right"></Glyphicon></MenuItem>
-            </NavDropdown>
-        ) ;
-    }
-
-
-
+      if ( this.state.loggedIn ) {
+          connexion =  (
+              <NavDropdown eventKey={3} title={<Glyphicon glyph="user" >{this.state.profile ? this.state.profile.name : null}</Glyphicon>} id="basic-nav-dropdown">
+                    <MenuItem eventKey={3.3} onClick={this.logout} >Log Out <Glyphicon glyph="log-out" className="pull-right"></Glyphicon></MenuItem>
+              </NavDropdown>
+          ) ;
+      }
         return (
           <Grid id='mainLayout' fluid>
             <Row>
               <Navbar fixedTop fluid className="">
                   <Grid>
                     <Navbar.Header>
-                      <Navbar.Brand>
-                        <Link to="/"><img width="100" src="/img/logo.png"></img></Link>
-                      </Navbar.Brand>
-                      <Navbar.Toggle />
                     </Navbar.Header>
 
                     <Navbar.Collapse>
                      <Nav pullRight>
-                        <li><Link to="/">Accueil</Link></li>
-                        <li><Link to="/explorer">Explorer</Link></li>
-                        <li><Link to="/simulateur">Simulateur</Link></li>
-                        <li><Link to="/faq">Questions</Link></li>
-                        <li><Link to="/contact">Contact</Link></li>
                         <li>
                             <Navbar.Form>
                                 {connexion}
@@ -100,9 +75,6 @@ class Layout extends Component {
           <Row className="layout-content">
                     {/* this is the important part */}
                     {this.props.children}
-              </Row>
-              <Row>
-              <Footer />
               </Row>
           </Grid>
         );

@@ -1,12 +1,12 @@
 var React = require('react');
 import { Route, IndexRoute, IndexRedirect } from 'react-router'
 
-import NoMatch from './client/components/NoMatch';
-import Layout from './client/components/Layout';
-import IndexPage from './client/components/HomePage';
-import Login from './client/components/Login';
-import LayoutStore from './client/stores/LayoutStore';
-import LayoutActions from './client/actions/LayoutActions';
+import NoMatch from './components/NoMatch';
+import Layout from './components/Layout';
+import IndexPage from './components/HomePage';
+import Login from './components/Login';
+import LayoutStore from './stores/LayoutStore';
+import LayoutActions from './actions/LayoutActions';
 
 import Toastr from 'toastr';
 import _ from 'lodash';
@@ -26,7 +26,7 @@ const parseAuthLoginHash = (nextState, replace) => {
         } else {
             replace({ pathname: nextState.location.pathname })
         }
-    } 
+    }
 }
 
 const routes = (

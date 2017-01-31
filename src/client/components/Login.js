@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import {Grid,  Row, Col} from 'react-bootstrap';
-import { browserHistory } from 'react-router'
 import LayoutStore from '../stores/LayoutStore';
 
 import _ from 'lodash';
