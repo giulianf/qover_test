@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import BasicDao from './BasicDao';
-import { SimulateurResultInfo } from '../model/SimulateurResultInfo';
+import { SimulateurInfo } from '../model/SimulateurInfo';
 
 export class SimulatorDao extends BasicDao {
 
