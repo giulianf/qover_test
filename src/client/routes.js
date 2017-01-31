@@ -4,13 +4,7 @@ import { Route, IndexRoute, IndexRedirect } from 'react-router'
 import NoMatch from './client/components/NoMatch';
 import Layout from './client/components/Layout';
 import IndexPage from './client/components/HomePage';
-import Explorer from './client/components/Explorer';
-import Simulateur from './client/components/Simulateur';
-import Faq from './client/components/Faq';
-import Contact from './client/components/Contact';
-import Profile from './client/components/Profile';
 import Login from './client/components/Login';
-import Emprunteur from './client/components/Emprunteur';
 import LayoutStore from './client/stores/LayoutStore';
 import LayoutActions from './client/actions/LayoutActions';
 
@@ -28,7 +22,7 @@ const requireAuth = (nextState, replace, callback) => {
 const parseAuthLoginHash = (nextState, replace) => {
     if (LayoutStore.loggedIn) {
         if (_.isEqual(nextState.location.pathname, '/login')) {
-            replace({ pathname: 'profile' })
+            replace({ pathname: '/' })
         } else {
             replace({ pathname: nextState.location.pathname })
         }
@@ -38,12 +32,6 @@ const parseAuthLoginHash = (nextState, replace) => {
 const routes = (
         <Route path='/' component={Layout}>
             <IndexRoute component={IndexPage}/>
-            <Route path="explorer" component={Explorer} />
-            <Route path="/emprunteur/:emprunteurId" component={ Emprunteur }/>
-            <Route path='simulateur' component={Simulateur} />
-            <Route path='/faq' component={Faq} />
-            <Route path='/contact' component={Contact} />
-            <Route path='/profile' component={Profile} onEnter={requireAuth}/>
             <Route path='/login' component={Login} onEnter={parseAuthLoginHash}/>
             <Route path="*" component={NoMatch} />
         </Route>
