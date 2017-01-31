@@ -3,6 +3,7 @@ import { createDateMongo } from '../common/Utility';
 import { BasicInfo } from '../model/BasicInfo';
 import async from 'async';
 import ValidatorBasic from '../validator/validatorBasicInfo';
+import BasicDao from './BasicDao';
 
 export class ProfileDao extends BasicDao {
     constructor(_mongodb) {
