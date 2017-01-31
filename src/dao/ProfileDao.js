@@ -1,16 +1,10 @@
 import _ from 'lodash';
-import { error, debug, info } from '../common/UtilityLog';
-import { createDateMongo, getBelgiumDate, getYear, getBelgiumDateDetails, addDays, getCurrentMomentDate, getDateISO } from '../common/Utility';
+import { createDateMongo } from '../common/Utility';
 import { BasicInfo } from '../model/BasicInfo';
-import { BasicInfoEmprunteur } from '../model/BasicInfoEmprunteur';
-import { ContractsPreteur } from '../model/ContractsPreteur';
-import { ContractsEmprunteur } from '../model/ContractsEmprunteur';
 import async from 'async';
 import ValidatorBasic from '../validator/validatorBasicInfo';
-import ValidatorEmprunteur from '../validator/validatorEmprunteurBasic';
-let soap = require('soap');
 
-export class ProfileDao {
+export class ProfileDao extends BasicDao {
     constructor(_mongodb) {
         this._mongodb = _mongodb;
     }
