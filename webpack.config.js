@@ -55,7 +55,7 @@ module.exports = {
             loader: ExtractTextPlugin.extract('style', 'css!postcss!less')
         },
         {
-            test: /\.(png|jpg|jpeg|gif)$/,
+            test: /\.(png|jpg|jpeg|eot|ttf|gif|svg|woff|woff2)$/,
             loader: "url?limit=10000"
         },
         // the url-loader uses DataUrls.
