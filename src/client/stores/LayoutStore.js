@@ -97,6 +97,12 @@ class LayoutStore extends BaseStore {
 
   }
 
+    get stateLog() {
+        return {
+            lock: this.getLock
+        }
+    }
+
     get stateLayout() {
         return {
             profile: this.getProfile,
