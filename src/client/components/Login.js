@@ -12,10 +12,12 @@ class Login extends Component {
     constructor(props) {
         super(props);
         this.state = getState();
+
+            this.state.lock;
     }
 
     componentDidMount() {
-        this.state.lock.show();
+
     }
 
 
