@@ -3,7 +3,7 @@ import ProvideConstants from '../constants/ProvideConstants';
 
 import BaseStore from './BaseStore';
 import Toastr from 'toastr';
-// import Auth0 from 'auth0-js';
+import Auth0 from 'auth0-js';
 import Auth0Lock from 'auth0-lock'
 import { isTokenExpired } from './jwtHelper'
 import _ from 'lodash';
@@ -20,9 +20,15 @@ class LayoutStore extends BaseStore {
         this._isAdmin = false;
         this._profile = {};
 
+        // Configure Auth0 workaround to hash value when it's connected
+        this.auth0 = new Auth0({
+          clientID: process.env.AUTH_CLIENT_ID,
+          domain: process.env.AUTH_AUDIENCE,
+          responseType: 'token'
+        });
         const options = {
             closable: false,
-            language: 'fr',
+            language: 'en',
             auth: {
                responseType: "token",
            },
@@ -33,10 +39,18 @@ class LayoutStore extends BaseStore {
         this.lock = new Auth0Lock(process.env.AUTH_CLIENT_ID, process.env.AUTH_AUDIENCE, options);
 
         // Add callback for lock `authenticated` event
-        this.lock.on('authenticated', this._doAuthentication.bind(this));
-        this.lock.on('hash_parsed', this._doAuthentication.bind(this) );
+        // this.lock.on('authenticated', this._doAuthentication.bind(this));
+        // this.lock.on('hash_parsed', this._doAuthentication.bind(this) );
 
+        // binds login functions to keep this context
+        this.login = this.login.bind(this);
     }
+
+
+  login() {
+    // Call the show method to display the widget.
+    this.lock.show();
+  }
 
     _doAuthentication(authResult) {
         if (!_.isNil(authResult)) {
@@ -46,13 +60,7 @@ class LayoutStore extends BaseStore {
                 if (error) {
                     // callback(error);
                 } else {
-                    let isAdmin = false;
-                    _.map(userDetail.app_metadata.roles, role => {
-                            if (_.isEqual(role, 'admin')) {
-                                isAdmin = true;
-                            }
-                    });
-                    this.setUser(userDetail, isAdmin);
+                    this.setUser(userDetail);
                     // in order to emit the profile
                     this.emitChange();
                 }
@@ -80,7 +88,7 @@ class LayoutStore extends BaseStore {
                 this.emitChange();
                 break;
             case ProvideConstants.LOGIN_USER:
-                this.setUser(action.profile, action.isAdmin);
+                this.setUser(action.profile);
 
                 this.emitChange();
                 break;
@@ -99,7 +107,7 @@ class LayoutStore extends BaseStore {
 
     get stateLog() {
         return {
-            lock: this.getLock
+            lock: this.login()
         }
     }
 
@@ -133,13 +141,17 @@ class LayoutStore extends BaseStore {
     }
 
     setToken(idToken) {
-      // Saves user token to local storage
-      localStorage.setItem('id_token', idToken);
+        if (!_.isNil(idToken)) {
+            // Saves user token to local storage
+            localStorage.setItem('id_token', idToken);
+        }
     }
 
     setAccessToken(accessToken) {
-      // Saves user token to local storage
-      localStorage.setItem('accessToken', accessToken);
+        if (!_.isNil(accessToken)) {
+            // Saves user token to local storage
+            localStorage.setItem('accessToken', accessToken);
+        }
     }
 
     get getToken() {
@@ -147,7 +159,7 @@ class LayoutStore extends BaseStore {
       return localStorage.getItem('id_token');
     }
 
-    setUser(profile, isAdmin) {
+    setUser(profile) {
         localStorage.setItem('_profile', JSON.stringify(profile));
     }
 
@@ -159,6 +171,18 @@ class LayoutStore extends BaseStore {
 
     get getLock() {
         return this.lock ;
+    }
+
+    parseHash(hash) {
+        if (/access_token|id_token|error/.test(hash)) {
+            const authResult = this.auth0.parseHash(hash);
+            // uses auth0 parseHash method to extract data from url hash
+            //   const authResult = this.auth0.parseHash(hash);
+            this._doAuthentication(authResult);
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
