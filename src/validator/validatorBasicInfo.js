@@ -3,13 +3,17 @@ import _ from 'lodash';
 export default {
     CAR_MINIMUM : 5000,
     CAR_MAXIMUM : 75000,
-  validateSimulator(simulatorInfo) {
+  validateSimulator(simulatorInfo, carList) {
       if (_.isNil(simulatorInfo)) {
           throw new Error("Impossible to validate the calculator.");
       }
 
-      if (!this.validateNom(simulatorInfo.name)) {
+      if (!this.validateName(simulatorInfo.name)) {
           throw new Error("The family name is not valid");
+      }
+
+      if (!this.validateCarName(carList, simulatorInfo.carName)) {
+          throw new Error("The car name is not valid");
       }
 
       if (!this.validateCarValue(simulatorInfo.carValue)) {

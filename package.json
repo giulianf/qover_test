@@ -4,7 +4,7 @@
   "description": "Pour tester qover",
   "main": "src/server.js",
   "scripts": {
-    "start": "webpack-dev-server",
+    "start": "NODE_ENV=development webpack-dev-server",
     "lint": "eslint src",
     "start-dev": "node_modules/.bin/babel-node --presets 'react,es2015,stage-2' src/server.js",
     "auto-start": "NODE_ENV=development nodemon --exec \"npm run start-dev\" --ignore public/js"
@@ -39,6 +39,7 @@
     "react-dom": "^15.3.1",
     "react-router": "^2.6.1",
     "react-tap-event-plugin": "~2.0.1",
+    "sqlite3": "^3.1.8",
     "toastr": "^2.1.2",
     "winston": "^2.3.0"
   },

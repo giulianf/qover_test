@@ -17,10 +17,11 @@ class ProvideService {
      * @param  {type} simulatorInfo description
      * @return {type}              description
      */
-    calculate(profile, simulatorInfo) {
+    calculate(profile, simulatorDataInfo) {
       return new bluebird( (resolve, reject) => {
           ApiService.post(
-             `SIMULATE_API${JSON.stringify(simulatorInfo)}/${profile.user_id}`,
+             SIMULATE_API,
+            {simulatorInfo: simulatorDataInfo, userId: profile.user_id},
           ).then(response => {
             if (!_.isNil(response)) {
                 return resolve(response.data);

@@ -5,22 +5,23 @@ import cors from 'cors';
 let bodyParser = require('body-parser');
 import _ from 'lodash';
 const jwt = require('express-jwt');
-import { error, debug, info, getVersion } from './common/UtilityLog';
 import { SimulatorDao } from './dao/SimulatorDao';
-import { ProfileDao } from './dao/ProfileDao';
+import { BasicDao } from './dao/BasicDao';
 
+const basicUitlity = new BasicDao();
+
+let f = require('util').format;
 
 // initialize the server and configure support for ejs templates
 const app = new Express();
 const server = new Server(app);
 require('dotenv').config({
-    path: path.join(__dirname, '..' ,'config', `.env.${process.env.NODE_ENV}`),
+    path: path.join(__dirname, 'config', `.env.${process.env.NODE_ENV}`),
     // path: './config/.env.${process.env.NODE_ENV}',
     silent: true
 });
-const MongoDb =  require('mongodb');
-const MongoClient = MongoDb.MongoClient,
-  f = require('util').format;
+
+app.use(bodyParser.json({limit: '50mb'}));
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -30,36 +31,6 @@ app.use(cors({
     credentials: true
 }) );
 
-// Authentication middleware provided by express-jwt.
-// This middleware will check incoming requests for a valid
-// JWT on any routes that it is applied to.
-const authCheck = jwt({
-  secret: new Buffer(process.env.AUTH_SECRET, 'base64'),
-  audience: process.env.AUTH_AUDIENCE
-});
-
-let _mongodb;
-
-const user = process.env.DB_USER;
-const password = process.env.DB_PASS;
-const localhostDB = process.env.DB_HOST;
-const portDB = process.env.DB_PORT;
-const authSource = process.env.DB_DB;
-
-// Connection URL
-const url = f('mongodb://%s:%s@%s:%s/%s', user, password, localhostDB, portDB, authSource);
-
-// Use connect method to connect to the server
-MongoClient.connect(url, function(err, db) {
-    if (err) {
-        error('MongoDb is not connected.');
-        return;
-    }
-
-    info("Mongo db connected successfully to server");
-    _mongodb =  db;
-});
-
 
 /******************************************/
 /********** START SIMULATOR API ***********/
@@ -68,15 +39,23 @@ MongoClient.connect(url, function(err, db) {
 /**
  * Calculate Simulator
  */
-app.post('/api/calculate/:calculateData', (req, res) => {
-    debug("/api/calculate/:calculateData");
-    debug("Receive data calculateData: " + req.params.calculateData);
+app.post('/api/calculate', (req, res) => {
+    basicUitlity.debug("/api/calculate with user id: " + req.body.userId);
 
-    const calculateData = JSON.parse(req.params.calculateData);
+    const calculateData = req.body.simulatorInfo;
+    const userId = req.body.userId;
 
     const simulatorDao = new SimulatorDao();
 
-    simulatorDao.calculateData(res, calculateData);
+    simulatorDao.calculateData(res, calculateData, userId);
+});
+
+app.get('/api/getCarList', (req, res) => {
+    basicUitlity.debug("/api/getCarList");
+
+    const simulatorDao = new SimulatorDao();
+
+    simulatorDao.getCarNameList(res);
 });
 
 
@@ -84,13 +63,13 @@ app.post('/api/calculate/:calculateData', (req, res) => {
 const port = process.env.SERVER_PORT ;
 const host = process.env.SERVER_HOST;
 const env = process.env.NODE_ENV;
-const version = getVersion();
+const version = basicUitlity.getVersion();
 server.listen(port, err => {
   if (err) {
-    return error(err);
+    return basicUitlity.error(err);
   }
-   info(`*************************************************`);
-   info(`Server running on http://${host}:${port} [${env}]`);
-   info(`Version of Katapulta: ${version}`);
-   info(`*********************************`);
+   basicUitlity.info(`*************************************************`);
+   basicUitlity.info(`Server running on http://${host}:${port} [${env}]`);
+   basicUitlity.info(`Version of QOVER TEST: ${version}`);
+   basicUitlity.info(`*********************************`);
 });

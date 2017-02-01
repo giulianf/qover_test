@@ -14,18 +14,20 @@ class Calculator extends Component {
           return null;
       }
       const validateNameBool = Validator.validateName(this.props.simulatorInfo.name) ;
+      const validateCarNameBool = Validator.validateCarName(this.props.carOptionList, this.props.simulatorInfo.carName);
       const validateCarValueBool = Validator.validateCarValue(this.props.simulatorInfo.carValue);
       const validateName = validateNameBool ? "success" : "error";
+      const validateCarName = validateCarNameBool ? "success" : "error";
       const validateCarValue = validateCarValueBool ? "success" : "error";
 
       const carOption = _.map(this.props.carOptionList, carName => {
           return (
-              <option key={carName.value} value={carName.value}>carName.label</option>
+              <option key={carName.value} value={carName.value}>{carName.label}</option>
           )
       });
 
       // Button disable
-    const disableCalculate = validateNameBool && validateCarValueBool ? false : true;
+    const disableCalculate = validateNameBool && validateCarValueBool && validateCarNameBool ? false : true;
     const buttonCalculate = (
         <Button
             bsStyle='primary'
@@ -50,7 +52,7 @@ class Calculator extends Component {
                                <HelpBlock>Name must at least 5 characters</HelpBlock>
                          </Col>
                        </FormGroup>
-                       <FormGroup controlId="formControlsCarSelect">
+                       <FormGroup controlId="formControlsCarSelect" validationState={validateCarName}>
                            <Col componentClass={ControlLabel} md={2} smHidden xsHidden>
                              Select a car
                            </Col>
@@ -58,6 +60,7 @@ class Calculator extends Component {
                               <FormControl componentClass="select"
                               onChange={e => ProvideActions.updateSimulator({carName: e.target.value})}
                               placeholder="Select a car" value={this.props.simulatorInfo.carName}>
+                              <option value='select'>Select</option>
                                 { carOption }
                               </FormControl>
                           </Col>
@@ -72,7 +75,7 @@ class Calculator extends Component {
                           </Col>
                         </FormGroup>
                    </Col>
-                   <Col md={2}>
+                   <Col lg={2} lgOffset={5}>
                    { buttonCalculate }
                    </Col>
                 </Row>
