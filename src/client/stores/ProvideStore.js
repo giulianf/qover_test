@@ -58,7 +58,7 @@ class ProvideStore extends BaseStore {
     switch(action.type){
        // Respond to CALCULATE_SUCCESS action
       case ProvideConstants.CALCULATE_SUCCESS:
-        this.calculateSimulator(action.body);
+        this.populateSimulator(action.body);
         // If action was responded to, emit change event
         this.emitChange();
         break;

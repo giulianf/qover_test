@@ -73,8 +73,8 @@ export class SimulatorDao extends BasicDao {
              },
             (callback) => {
                 this.debug("****  final price: " + priceFinal );
-
-                res.end( "priceFinal.toString()" );
+                simulateData.price = priceFinal;
+                res.end( JSON.stringify(simulateData) );
             }
             ], (err) => {
                 this.insertResult(priceFinal, 'REJECT', simulateData, userId, (err) => {

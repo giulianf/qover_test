@@ -37,6 +37,12 @@ class Calculator extends Component {
         </Button>
     );
 
+    const result = this.props.simulatorInfo.price  ? (
+        <Col lg={2} lgOffset={5}>
+            Price : { this.props.simulatorInfo.price }
+        </Col>
+    ) : null;
+
     return (
         <Form horizontal>
             <Grid>
@@ -78,6 +84,10 @@ class Calculator extends Component {
                    <Col lg={2} lgOffset={5}>
                    { buttonCalculate }
                    </Col>
+
+                   { result }
+
+
                 </Row>
             </Grid>
         </Form>
