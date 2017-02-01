@@ -12,7 +12,8 @@ import Toastr from 'toastr';
 import _ from 'lodash';
 // onEnter callback to validate authentication in private routes
 const requireAuth = (nextState, replace, callback) => {
-    if (!LayoutStore.loggedIn) {
+    const loggedBool= LayoutStore.parseHash(nextState.location.hash);
+    if (!LayoutStore.loggedIn || !loggedBool) {
         replace({ pathname: '/login' });
     }
     callback();
@@ -20,7 +21,9 @@ const requireAuth = (nextState, replace, callback) => {
 
 // OnEnter for callback url to parse access_token
 const parseAuthLoginHash = (nextState, replace) => {
-    if (LayoutStore.loggedIn) {
+    const loggedBool= LayoutStore.parseHash(nextState.location.hash);
+
+    if (LayoutStore.loggedIn || loggedBool) {
         if (_.isEqual(nextState.location.pathname, '/login')) {
             replace({ pathname: '/' })
         } else {
@@ -31,7 +34,7 @@ const parseAuthLoginHash = (nextState, replace) => {
 
 const routes = (
         <Route path='/' component={Layout}>
-            <IndexRoute component={IndexPage}  onEnter={requireAuth}/>
+            <IndexRoute component={IndexPage} onEnter={requireAuth}/>
             <Route path='/login' component={Login} onEnter={parseAuthLoginHash}/>
             <Route path="*" component={NoMatch} />
         </Route>
