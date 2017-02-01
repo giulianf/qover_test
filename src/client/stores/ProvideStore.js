@@ -81,19 +81,19 @@ class ProvideStore extends BaseStore {
 
   get stateSimulator() {
     return {
-        simulateur : this.getSimulateur,
+        simulatorInfo : this.getSimulator,
         carOptionList : this.getCarOptionList
     };
    }
 
 
   /**
-   * getSimulateur - Object to display simulator information
+   * getSimulator - Object to display simulator information
    *
    * @return {object}  description
    */
-  get getSimulateur() {
-      return this._simulateur;
+  get getSimulator() {
+      return this._simulator;
   }
 
   /**
