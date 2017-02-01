@@ -28,7 +28,7 @@ export default class HomePage extends Component {
     }
 
     _handleSimulateClick() {
-
+        ProvideActions.calculate(this.state.profile, this.state.simulatorInfo);
     }
 
     render () {
