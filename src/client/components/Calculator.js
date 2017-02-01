@@ -47,7 +47,7 @@ class Calculator extends Component {
                          <Col sm={6} md={4}>
                            <FormControl type="text" placeholder="Family name"
                                onChange={e => ProvideActions.updateSimulator({name: e.target.value})}  value={this.props.simulatorInfo.name}/>
-                               <HelpBlock>Name must higher than 5 characters</HelpBlock>
+                               <HelpBlock>Name must at least 5 characters</HelpBlock>
                          </Col>
                        </FormGroup>
                        <FormGroup controlId="formControlsCarSelect">
