@@ -13,7 +13,7 @@ import _ from 'lodash';
 // onEnter callback to validate authentication in private routes
 const requireAuth = (nextState, replace, callback) => {
     const loggedBool= LayoutStore.parseHash(nextState.location.hash);
-    if (!LayoutStore.loggedIn || !loggedBool) {
+    if (!LayoutStore.loggedIn && !loggedBool) {
         replace({ pathname: '/login' });
     }
     callback();
