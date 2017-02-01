@@ -87,11 +87,6 @@ class LayoutStore extends BaseStore {
 
                 this.emitChange();
                 break;
-            case ProvideConstants.LOGIN_USER:
-                this.setUser(action.profile);
-
-                this.emitChange();
-                break;
             case ProvideConstants.LOGOUT_USER:
                 this.removeUser();
 
