@@ -18,8 +18,8 @@ export default {
 
   },
 
-  validateNom(nom) {
-      return !_.isNil(nom) && !_.isEmpty(nom) ? true : false;
+  validateName(name) {
+      return !_.isNil(name) && !_.isEmpty(name) && _.size(name) > 5 ? true : false;
   },
 
   validateCarName(carList, carNameSelected) {
