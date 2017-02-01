@@ -81,6 +81,7 @@ class ProvideStore extends BaseStore {
 
   get stateSimulator() {
     return {
+        profile: LayoutStore.getProfile,
         simulatorInfo : this.getSimulator,
         carOptionList : this.getCarOptionList
     };
