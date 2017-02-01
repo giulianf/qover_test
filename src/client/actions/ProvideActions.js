@@ -4,6 +4,9 @@ import ProvideService from '../services/ProvideService';
 
 
 export default {
+    updateSimulator: (newValue) => {
+        dispatch(ProvideConstants.UPDATE_SIMULATOR, {newValue});
+    },
     calculate: (profile, pageKey) => {
         let promise = ProvideService.calculate(profile, pageKey);
 
