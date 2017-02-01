@@ -19,14 +19,13 @@ class Layout extends Component {
         this.state = getLayoutState();
         this._onChange = this._onChange.bind(this);
         this.logout = this.logout.bind(this);
-
       }
 
     logout() {
        LayoutActions.logUserOut();
 
        // redirects to login page
-       this.context.router.push('/');
+       this.context.router.push('/login');
      }
 
     _onChange() {
