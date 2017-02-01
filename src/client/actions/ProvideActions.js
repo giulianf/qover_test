@@ -7,8 +7,8 @@ export default {
     updateSimulator: (newValue) => {
         dispatch(ProvideConstants.UPDATE_SIMULATOR, {newValue});
     },
-    calculate: (profile, pageKey) => {
-        let promise = ProvideService.calculate(profile, pageKey);
+    calculate: (profile, simulatorInfo) => {
+        let promise = ProvideService.calculate(profile, simulatorInfo);
 
         dispatchAsync(promise, {
           request: ProvideConstants.CALCULATE,
