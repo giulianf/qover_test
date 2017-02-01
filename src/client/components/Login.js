@@ -4,17 +4,18 @@ import LayoutStore from '../stores/LayoutStore';
 
 import _ from 'lodash';
 
-
-function getLayoutState() {
-  return LayoutStore.state;
+function getState() {
+    return LayoutStore.stateLog;
 }
 
 class Login extends Component {
     constructor(props) {
         super(props);
-        this.state = getLayoutState();
-        this.state.lock.show();
+        this.state = getState();
+    }
 
+    componentDidMount() {
+        this.state.lock.show();
     }
 
 
