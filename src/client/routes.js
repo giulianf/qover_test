@@ -31,7 +31,7 @@ const parseAuthLoginHash = (nextState, replace) => {
 
 const routes = (
         <Route path='/' component={Layout}>
-            <IndexRoute component={IndexPage}/>
+            <IndexRoute component={IndexPage}  onEnter={requireAuth}/>
             <Route path='/login' component={Login} onEnter={parseAuthLoginHash}/>
             <Route path="*" component={NoMatch} />
         </Route>
