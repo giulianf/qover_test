@@ -19,7 +19,7 @@ export default {
   },
 
   validateName(name) {
-      return !_.isNil(name) && !_.isEmpty(name) && _.size(name) > 5 ? true : false;
+      return !_.isNil(name) && !_.isEmpty(name) && _.size(name) >= 5 ? true : false;
   },
 
   validateCarName(carList, carNameSelected) {
