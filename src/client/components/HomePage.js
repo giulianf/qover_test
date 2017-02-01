@@ -9,6 +9,7 @@ export default class HomePage extends Component {
         ProvideActions.getCarList();
 
         this._onChange = this._onChange.bind(this);
+        this._handleSimulateClick = this._handleSimulateClick.bind(this);
 
         this.state = ProvideStore.stateSimulator;
 
@@ -26,11 +27,15 @@ export default class HomePage extends Component {
         ProvideStore.removeChangeListener(this._onChange);
     }
 
+    _handleSimulateClick() {
+
+    }
+
     render () {
         return (
             <div>
               {/* Calculator */}
-              <Calculator {...this.state}/>
+              <Calculator handleSimulateClick={this._handleSimulateClick} {...this.state}/>
             </div>
         );
     }
