@@ -1,6 +1,6 @@
 import React, { Component, PropTypes  } from 'react';
 import _ from 'lodash';
-import { Grid, Form, Row, Col, FormControl, FormGroup, ControlLabel, Button, HelpBlock } from 'react-bootstrap';
+import { Grid, Form, Row, Col, FormControl, FormGroup, ControlLabel, Button, HelpBlock, Label } from 'react-bootstrap';
 import Validator from '../../validator/validatorBasicInfo';
 import ProvideActions from '../actions/ProvideActions';
 
@@ -38,8 +38,8 @@ class Calculator extends Component {
     );
 
     const result = this.props.simulatorInfo.price  ? (
-        <Col lg={2} lgOffset={5}>
-            Price : { this.props.simulatorInfo.price }
+        <Col lg={3}>
+            <h3>Price <Label>{ this.props.simulatorInfo.price }</Label></h3>
         </Col>
     ) : null;
 
@@ -77,18 +77,19 @@ class Calculator extends Component {
                           </Col>
                           <Col sm={6} md={4}>
                             <FormControl type="number" placeholder="Car value"
-                                onChange={e => ProvideActions.updateSimulator({carValue: e.target.value})}  value={this.props.simulatorInfo.carValue}/>
+                                onChange={e => ProvideActions.updateSimulator({carValue: parseFloat(e.target.value)})}  value={this.props.simulatorInfo.carValue}/>
                           </Col>
                         </FormGroup>
                    </Col>
-                   <Col lg={2} lgOffset={5}>
-                   { buttonCalculate }
-                   </Col>
-
-                   { result }
-
-
-                </Row>
+                   </Row>
+                    <Row>
+                        <Col lg={2} lgOffset={5}>
+                        { buttonCalculate }
+                        </Col>
+                    </Row>
+                    <Row>
+                         { result }
+                    </Row>
             </Grid>
         </Form>
     );
