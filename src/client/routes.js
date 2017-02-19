@@ -12,8 +12,10 @@ import Toastr from 'toastr';
 import _ from 'lodash';
 // onEnter callback to validate authentication in private routes
 const requireAuth = (nextState, replace, callback) => {
+    // no need to have a boolean
     const loggedBool= LayoutStore.parseHash(nextState.location.hash);
-    if (!LayoutStore.loggedIn && !loggedBool) {
+
+    if (!LayoutStore.loggedIn) {
         replace({ pathname: '/login' });
     }
     callback();

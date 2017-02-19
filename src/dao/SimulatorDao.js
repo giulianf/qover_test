@@ -94,21 +94,26 @@ export class SimulatorDao extends BasicDao {
                 price = 250 + ((parseFloat(simulateData.carValue) * 3) / 1000);
                 price = new Intl.NumberFormat().format(price);
 
+                price = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'EUR' , maximumFractionDigits:2  }).format(price);
+
+                this.debug('Final Price: ' + price);
                 return price;
                     break;
                 case "BMW":
                  price = 150 + ((parseFloat(simulateData.carValue) * 4) / 1000);
 
+                 price = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'EUR' , maximumFractionDigits:2  }).format(price);
+
+                 this.debug('Final Price: ' + price);
                  return price;
                     break;
                 case "PORSCHE":
 
                 price = 500 + ((parseFloat(simulateData.carValue) * 7) / 1000);
-                this.debug('Price: ' + price);
 
-                price = new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' , maximumFractionDigits:2  }).format(price);
+                price = new Intl.NumberFormat('en-US',{ style: 'currency', currency: 'EUR' , maximumFractionDigits:2  }).format(price);
 
-                this.debug('Price: ' + price);
+                this.debug('Final Price: ' + price);
 
                 return price;
                     break;
